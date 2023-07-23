@@ -1,0 +1,23 @@
+.footerElement {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer {
+    display: flex;
+    width: 700px;
+    justify-content: space-between;
+}
+
+.navigation {
+    list-style-type: none;
+}
+
+.boldText {
+    margin-bottom: 5px;
+}

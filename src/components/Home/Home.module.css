@@ -1,0 +1,40 @@
+.ReserveTable {
+    display: flex; 
+    justify-content: center;
+    /* background-color: #495e57; */
+    background: linear-gradient(to bottom, #495e57 85%, white 15%);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.ReserveTableContent {
+    width: 750px;
+    display: flex; 
+    justify-content: space-between;
+}
+
+img {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.ReserveTableName {
+    font-size: 25px;
+    color: #dab500;
+}
+
+.ReserveTableSecondName {
+    font-size: 20px;
+    color: white;
+    padding-bottom: 7px;
+}
+
+.ReserveTableText {
+    font-size: 13px;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.ReserveTableInfo {
+    width: 200px;
+}
