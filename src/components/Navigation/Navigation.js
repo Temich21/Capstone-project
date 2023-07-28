@@ -1,5 +1,6 @@
 import styles from "./Navigation.module.css"
 import logo from '../../pictures/Logo%20.png'
+import { Link } from "react-router-dom"
 
 const navigation = [
     { id: 1, title: 'Home', path: '/' },
@@ -20,12 +21,13 @@ export const Navigation = () => {
                 <ul className={styles.navigation}>
                     {navigation.map(({ id, title, path }) => (
                         <li key={id} className={styles.navigationElement}>
-                            <strong>{title}</strong>
+                            <Link to={path}><strong>{title}</strong></Link>
                         </li>
                     ))
                     }
                 </ul>
             </nav>
+
         </header>
     )
 }

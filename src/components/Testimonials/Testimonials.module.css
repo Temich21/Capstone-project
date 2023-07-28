@@ -1,0 +1,43 @@
+.testimonialsSection {
+    background-color: #495e57;
+    padding-bottom: 10px;
+}
+
+.testimonials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.testimonial {
+    width: 270px;
+    height: 272px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.stars {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.star {
+    width: 25px;
+}
+
+.portret {
+    width: 150px;
+    border-radius: 50%;
+    padding-bottom: 10px;
+}
+
+.sectionName {
+    display: flex;
+    justify-content: center;
+    color: #dab500;
+    padding-bottom: 10px;
+    font-size: 35px;
+}
