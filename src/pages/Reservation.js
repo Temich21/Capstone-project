@@ -1,28 +1,40 @@
 import { Navigation } from '../components/Navigation/Navigation'
 import { Footer } from '../components/Footer/Footer'
-import { ReservationForm } from '../components/ReservationForm/ReservationForm'
-import { useState, useReducer } from "react"
+import { useReducer } from "react"
+import { useNavigate } from 'react-router-dom'
+import { submitAPI } from '../utils/fakeAPIs'
+import React, { Suspense } from 'react'
+import ReservationForm from "../components/ReservationForm/ReservationForm"
+import { initializeTimes, updateTimes } from '../utils/timeFunctions'
 
-
-
+// const ReservationForm = React.lazy(() => import("../components/ReservationForm/ReservationForm"))
 
 function Reservation() {
-    const initializeTimes = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
+    const navigate = useNavigate()
 
-    function updateTimes(state, selectedDate) {
-        return selectedDate;
+    const [
+        availableTimes,
+        dispatchOnDateChange
+    ] = useReducer(updateTimes, [], initializeTimes);
+
+    const submitForm = (formData) => {
+        const response = submitAPI(formData);
+        if (response) navigate('/confirmedreservations');
     }
-
-    const [availableTimesR, dispatch] = useReducer(updateTimes, initializeTimes)
-
-    const handleDateSelection = (date) => {
-        dispatch(date);
-    };
 
     return (
         <>
             <Navigation />
-            <ReservationForm availableTimes={availableTimesR} initializeTimes={initializeTimes} onChangeFunction={handleDateSelection} />
+            <ReservationForm
+                availableTimes={availableTimes}
+                dispatchDate={dispatchOnDateChange}
+                submitForm={submitForm} />
+            {/* <Suspense fallback={<div>Loading...</div>}>
+                <ReservationForm
+                    availableTimes={availableTimes}
+                    dispatchDate={dispatchOnDateChange}
+                    submitForm={submitForm} />
+            </Suspense> */}
             <Footer />
         </>
     );

@@ -1,54 +1,87 @@
-import { useState } from "react"
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 import styles from "./ReservationForm.module.css"
 
-export const ReservationForm = ({ availableTimes, initializeTimes, onChangeFunction }) => {
-    const [date, setDate] = useState('')
-    const [guestsNumber, setguestsNumber] = useState(1)
-    const [occasion, setOccasion] = useState('-')
+const ReservationForm = ({ availableTimes, dispatchDate, submitForm }) => {
+    const formik = useFormik({
+        initialValues: {
+            date: '',
+            time: '-',
+            guestsNumber: '',
+            occasion: '-'
+        },
+        onSubmit: (value) => {
+            submitForm(value)
+        },
+        validationSchema: Yup.object({
+            date: Yup.string()
+                .required("Required"),
+            time: Yup.string()
+                .required("Required")
+                .notOneOf(['-'], 'Required'),
+            guestsNumber: Yup.number()
+                .required("Required")
+        })
+    })
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (!date) {
-            alert('Please provide a date')
-            return
-        }
-
-        const obj = {
-            date: date,
-            reservationTime: availableTimes,
-            guestsNumber: guestsNumber,
-            occasion: occasion
-        }
-
-        console.log('Form was confirmed', obj)
+    const handleDate = (e) => {
+        formik.handleChange(e)
+        dispatchDate(e.target.value)
     }
 
     return (
         <section className={styles.formSection}>
-            <form className={styles.form} onSubmit={handleSubmit}>
-                <label for="res-date">Choose date</label>
-                <input value={date} type="date" id="res-date" onChange={(e) => setDate(e.target.value)} />
-                <label for="res-time">Choose time</label>
-                <select value={availableTimes} id="res-time" onChange={(e) => onChangeFunction(e.target.value)}>
-                    {initializeTimes.map((time) => <option>{time}</option>)}
-                    {/* <option>17:00</option>
-                    <option>18:00</option>
-                    <option>19:00</option>
-                    <option>20:00</option>
-                    <option>21:00</option>
-                    <option>22:00</option> */}
+            <form className={styles.form} onSubmit={formik.handleSubmit}>
+                <label htmlFor="res-date">Choose date</label>
+                <input id="res-date" name="date" value={formik.values.date} type="date" onChange={handleDate} data-testid="date" />
+                {
+                    formik.touched.date
+                    && formik.errors.date
+                    && <div style={{ color: 'red' }}>{formik.errors.date}</div>
+                }
+                <label htmlFor="res-time">Choose time</label>
+                <select id="res-time" name="time" value={formik.values.time} onChange={formik.handleChange} data-testid="time">
+                    <option>-</option>
+                    {availableTimes.map((time) => <option key={time}>{time}</option>)}
                 </select>
-                <label for="guests">Number of guests</label>
-                <input type="number" placeholder="1" min="1" max="10" id="guests" value={guestsNumber} onChange={(e) => setguestsNumber(e.target.value)} />
-                <label for="occasion" >Occasion</label>
-                <select id="occasion" value={occasion} onChange={(e) => setOccasion(e.target.value)} >
+                {
+                    formik.touched.time
+                    && formik.errors.time
+                    && <div style={{ color: 'red' }}>{formik.errors.date}</div>
+                }
+                <label htmlFor="guests">Number of guests</label>
+                <input
+                    type="number"
+                    placeholder="1"
+                    min="1"
+                    id="guests"
+                    name="guestsNumber"
+                    value={formik.values.guestsNumber}
+                    onChange={formik.handleChange}
+                    data-testid="guests-number"
+                />
+                {
+                    formik.touched.guestsNumber
+                    && formik.errors.guestsNumber
+                    && <div style={{ color: 'red' }}>{formik.errors.guestsNumber}</div>
+                }
+                <label htmlFor="occasion">Occasion</label>
+                <select id="occasion" name="occasion" value={formik.values.occasion} onChange={formik.handleChange} data-testid="occasion">
                     <option>-</option>
                     <option>Birthday</option>
                     <option>Anniversary</option>
                 </select>
-                <input type="submit" value="Make Your reservation" />
+                <button type="submit" style={{
+                    padding: '7px 15px 7px 15px',
+                    backgroundColor: '#f4ce14',
+                    borderStyle: 'none',
+                    borderRadius: '10px',
+                    fontWeight: 'bold'
+                }}>Make Your reservation</button>
             </form>
-        </section>
+        </section >
 
     )
 }
+
+export default ReservationForm
