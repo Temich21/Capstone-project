@@ -71,13 +71,17 @@ const ReservationForm = ({ availableTimes, dispatchDate, submitForm }) => {
                     <option>Birthday</option>
                     <option>Anniversary</option>
                 </select>
-                <button type="submit" style={{
-                    padding: '7px 15px 7px 15px',
-                    backgroundColor: '#f4ce14',
-                    borderStyle: 'none',
-                    borderRadius: '10px',
-                    fontWeight: 'bold'
-                }}>Make Your reservation</button>
+                <button
+                    type="submit"
+                    style={{
+                        padding: '7px 15px 7px 15px',
+                        backgroundColor: '#f4ce14',
+                        borderStyle: 'none',
+                        borderRadius: '10px',
+                        fontWeight: 'bold'
+                    }}
+                    aria-label="Make Your reservation"
+                >Make Your reservation</button>
             </form>
         </section >
 
